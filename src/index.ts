@@ -11,6 +11,15 @@ export { LifecycleHooks } from './hooks/lifecycle';
 export { parseRuleExpression, serializeRule, evaluateComposite, createSegmentRule, createScheduleRule } from './rules/engine';
 export { hashString, hashRange, generateId } from './utils/hash';
 export { isGitRepo, getGitInfo } from './utils/git';
+export { migrateManifest, needsMigration, hasMigrationPath } from './core/migration';
+export { extractDependencies, validateDependencies, detectCycles, getDependencyTree, checkConflicts, getAffectedFlags } from './core/dependencies';
+export { getTemplate, listTemplates, createFromTemplate, listTemplatesByCategory, getTemplateCategories } from './core/templates';
+export { searchFlags, fuzzyMatch, buildTagIndex, buildOwnerIndex, groupBy } from './core/search';
+export { discoverManifests, mergeDiscovered, findDuplicates } from './core/discovery';
+export { createSnapshot, compareSnapshots, restoreFromSnapshot } from './core/snapshot';
+export { FlagAnalytics } from './core/analytics';
+export { scanForUsages, scanContent, generateGuardReport } from './core/guard';
+export { lintManifest, getLintSummary, hasLintErrors, builtinRules } from './core/linter';
 
 export type {
   FlagValue,
