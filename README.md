@@ -1,10 +1,31 @@
-# flagops
+<div align="center">
 
-**Git-native feature flags with zero infrastructure.**
+# 🚩 flagops
 
-No servers. No databases. No third-party services. Just feature flags stored in version-controlled YAML/JSON files, evaluated locally, and managed through a clean CLI.
+### Git-native feature flags with zero infrastructure
+
+[![GitHub Stars](https://img.shields.io/github/stars/JSLEEKR/flagops?style=for-the-badge&logo=github&color=yellow)](https://github.com/JSLEEKR/flagops/stargazers)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tests](https://img.shields.io/badge/tests-373%20passing-brightgreen?style=for-the-badge)](#)
+
+<br/>
+
+**No servers. No databases. No third-party services. Just YAML files under version control.**
+
+</div>
 
 ---
+
+## Why This Exists
+
+Every feature flag SaaS adds a runtime dependency to your stack -- a network call on every flag evaluation, a vendor contract, and an audit trail that lives outside your codebase. When the service is down, your flags are unreachable. When you leave the vendor, you lose your history.
+
+`flagops` stores feature flags as YAML files that live in your git repository. Evaluation is local and instant. The audit trail is `git log`. Rollback is `git revert`. Zero infrastructure, zero cost, zero vendor lock-in.
+
+- **~0ms evaluation** -- flags are local files, not network requests
+- **Git is the audit trail** -- every flag change has an author, a timestamp, and a diff in your pull request history
+- **Targeting and rollouts included** -- percentage-based rollouts, user attribute rules, and per-environment overrides with no external service needed
 
 ## Why flagops?
 
