@@ -122,7 +122,7 @@ export const builtinTemplates: FlagTemplate[] = [
       description: (opts?.description as string) || `Config: ${name}`,
       status: 'active',
       type: (opts?.type as FlagDefinition['type']) || 'string',
-      defaultValue: opts?.defaultValue ?? '',
+      defaultValue: (opts?.defaultValue as FlagDefinition['defaultValue']) ?? '',
       tags: ['config'],
       createdAt: now(),
       updatedAt: now(),
