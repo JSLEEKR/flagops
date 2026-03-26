@@ -206,23 +206,87 @@ hooks.on('flag:evaluated', ({ result, flag }) => {
 });
 ```
 
+### Middleware Pipeline
+
+```typescript
+import { MiddlewarePipeline, createLoggingMiddleware } from 'flagops';
+
+const pipeline = new MiddlewarePipeline();
+pipeline.use('logger', createLoggingMiddleware());
+pipeline.use('override', createOverrideMiddleware(new Map([['beta', true]])));
+```
+
+### Flag Templates
+
+```typescript
+import { createFromTemplate } from 'flagops';
+
+const killSwitch = createFromTemplate('kill-switch', 'api-kill');
+const rollout = createFromTemplate('gradual-rollout', 'new-ui', { percentage: 25 });
+const abTest = createFromTemplate('ab-test', 'cta-experiment');
+```
+
+### Flag Linter
+
+```bash
+flagops validate  # Checks naming, descriptions, owners, expiry, rollout validity
+```
+
+### Bulk Operations
+
+```typescript
+import { bulkEnable, bulkAddTag } from 'flagops';
+
+bulkEnable(flags, ['feature-a', 'feature-b', 'feature-c']);
+bulkAddTag(flags, ['feature-a', 'feature-b'], 'release-v2');
+```
+
+### Flag Scheduling
+
+```typescript
+import { FlagScheduler } from 'flagops';
+
+const scheduler = new FlagScheduler();
+scheduler.schedule({
+  flagName: 'holiday-banner',
+  action: 'enable',
+  scheduledAt: '2026-12-24T00:00:00Z',
+});
+scheduler.executeDue(flags);
+```
+
 ## Architecture
 
 ```
 src/
   core/
-    types.ts       — Type definitions
-    parser.ts      — YAML/JSON parsing & validation
-    evaluator.ts   — Flag evaluation engine
-    store.ts       — Flag CRUD & persistence
-    exporter.ts    — Multi-format export (env, csv, types)
-    diff.ts        — Manifest comparison engine
+    types.ts         — Type definitions
+    parser.ts        — YAML/JSON parsing & validation
+    evaluator.ts     — Flag evaluation engine
+    store.ts         — Flag CRUD & persistence
+    exporter.ts      — Multi-format export (env, csv, types)
+    diff.ts          — Manifest comparison engine
+    migration.ts     — Manifest versioning & migration
+    dependencies.ts  — Flag dependency tracking
+    templates.ts     — Builtin flag templates
+    search.ts        — Advanced search & indexing
+    discovery.ts     — Multi-file flag discovery
+    snapshot.ts      — State snapshot & restore
+    analytics.ts     — Evaluation metrics
+    guard.ts         — Code usage scanning
+    linter.ts        — Flag hygiene rules
+    bulk.ts          — Bulk operations
+    scheduling.ts    — Timed activations
+    comparator.ts    — Cross-manifest comparison
   rules/
     engine.ts      — Advanced rule engine (composite AND/OR)
   hooks/
     lifecycle.ts   — Event hooks for flag lifecycle
   sdk/
     client.ts      — Runtime SDK client with caching
+    provider.ts    — Context provider with layered overrides
+    watcher.ts     — File change detection
+    middleware.ts  — Evaluation pipeline interceptors
   utils/
     hash.ts        — Deterministic hashing for rollouts
     git.ts         — Git integration utilities
