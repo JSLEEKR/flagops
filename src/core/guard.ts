@@ -22,7 +22,7 @@ export interface GuardReport {
 const FLAG_PATTERNS = [
   /isEnabled\(['"`]([^'"`]+)['"`]\)/g,
   /getValue\(['"`]([^'"`]+)['"`]\)/g,
-  /evaluate\(['"`]([^'"`]+)['"`]\)/g,
+  /evaluate\(['"`]([^'"`]+)['"`]/g,
   /getValueWithDefault\(['"`]([^'"`]+)['"`]\)/g,
   /flagops\.eval\s+['"`]?([a-zA-Z][a-zA-Z0-9_.-]*)['"`]?/g,
   /FLAGOPS_([A-Z_]+)/g,
