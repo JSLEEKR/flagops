@@ -20,6 +20,12 @@ export { createSnapshot, compareSnapshots, restoreFromSnapshot } from './core/sn
 export { FlagAnalytics } from './core/analytics';
 export { scanForUsages, scanContent, generateGuardReport } from './core/guard';
 export { lintManifest, getLintSummary, hasLintErrors, builtinRules } from './core/linter';
+export { ContextProvider, mergeContexts } from './sdk/provider';
+export { bulkEnable, bulkDisable, bulkArchive, bulkAddTag, bulkRemoveTag, bulkSetOwner, bulkDelete } from './core/bulk';
+export { FlagScheduler } from './core/scheduling';
+export { compareManifests, generateSyncPlan, getComparisonSummary } from './core/comparator';
+export { FlagWatcher } from './sdk/watcher';
+export { MiddlewarePipeline, createLoggingMiddleware, createOverrideMiddleware, createTrackingMiddleware } from './sdk/middleware';
 
 export type {
   FlagValue,
