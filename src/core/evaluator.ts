@@ -43,7 +43,7 @@ export function evaluateFlag(flag: FlagDefinition, context: EvaluationContext = 
   if (flag.rules?.length && context.attributes) {
     for (const rule of flag.rules) {
       if (evaluateRule(rule, context.attributes)) {
-        return { ...base, value: flag.defaultValue !== undefined ? flag.defaultValue : true, reason: 'rule' };
+        return { ...base, value: flag.type === 'boolean' ? true : flag.defaultValue, reason: 'rule' };
       }
     }
   }
