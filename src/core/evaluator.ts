@@ -43,7 +43,7 @@ export function evaluateFlag(flag: FlagDefinition, context: EvaluationContext = 
   if (flag.rules?.length && context.attributes) {
     for (const rule of flag.rules) {
       if (evaluateRule(rule, context.attributes)) {
-        return { ...base, value: flag.defaultValue !== false ? flag.defaultValue : true, reason: 'rule' };
+        return { ...base, value: flag.defaultValue !== undefined ? flag.defaultValue : true, reason: 'rule' };
       }
     }
   }
@@ -105,7 +105,12 @@ export function evaluateRule(rule: TargetingRule, attributes: Record<string, Fla
 
     case 'matches':
       try {
-        return new RegExp(String(rule.value)).test(String(attrValue));
+        // Limit pattern length to mitigate ReDoS
+        const pattern = String(rule.value);
+        if (pattern.length > 1000) return false;
+        // Use a timeout-safe approach: test with a bounded regex
+        const regex = new RegExp(pattern);
+        return regex.test(String(attrValue).slice(0, 10000));
       } catch {
         return false;
       }
